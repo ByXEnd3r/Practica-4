@@ -27,6 +27,7 @@ class CuentaTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
+		cuenta1 = new Cuenta("12345", "Cuenta1", 50);
 	}
 
 	@AfterEach
@@ -36,13 +37,37 @@ class CuentaTest {
 	@Test
 	public void testIngreso() {
 		cuenta1.ingreso(50);
-		assertEquals(50, cuenta1.getSaldo());
+		assertEquals(100, cuenta1.getSaldo());
 	}
 
 	@Test
 	public void testReintegro() throws Exception {
 		cuenta1.reintegro(50);
 		assertEquals(0, cuenta1.getSaldo());
+	}
+	
+	@Test
+	public void Test0014() throws Exception {
+		cuenta1.reintegro(200);
+		cuenta2.reintegro(350);
+		cuenta1.ingreso(100);
+		try {
+			cuenta2.reintegro(200);
+			fail("No ha saltado la excepción");
+		} catch (Exception e) {
+			
+		}
+		cuenta2.reintegro(150);
+		cuenta1.reintegro(200);
+		cuenta2.ingreso(50);
+		try {
+			cuenta2.reintegro(100);
+			fail("No ha saltado la excepción");
+		} catch (Exception e) {
+			
+		}
+		assertEquals(-250, cuenta1.getSaldo());
+		assertEquals(-450, cuenta2.getSaldo());
 	}
 
 }
