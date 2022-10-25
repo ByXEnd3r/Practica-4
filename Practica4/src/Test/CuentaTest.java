@@ -17,7 +17,7 @@ class CuentaTest {
 
 	@BeforeAll
 	static void setUpBeforeClass() {
-		cuenta1 = new Cuenta("12345", "Cuenta1", 0);
+		cuenta1 = new Cuenta("12345", "Cuenta1", 50);
 		cuenta2 = new Cuenta("67890", "Cuenta2", 0);
 	}
 
@@ -34,12 +34,13 @@ class CuentaTest {
 	}
 
 	@Test
-	public void testReintegro() {
+	public void testIngreso() {
 		cuenta1.ingreso(50);
 		assertEquals(50, cuenta1.getSaldo());
 	}
 
-	public void testIngreso() {
+	@Test
+	public void testReintegro() throws Exception {
 		cuenta1.reintegro(50);
 		assertEquals(0, cuenta1.getSaldo());
 	}
